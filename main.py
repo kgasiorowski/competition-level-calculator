@@ -50,9 +50,12 @@ def getClanCupUsernames():
     return [participant['username'] for participant in data['participants']]
 
 
+def getClanCupLevelsGained():
+    return {participant: getNumLevelsGained(participant) for participant in getClanCupUsernames()}
+
+
 if __name__ == "__main__":
-    participants = getClanCupUsernames()
-    print(f'{"Username":<15}{"Levels gained"}')
-    print('-----------------------------')
-    for participant in participants:
-        print(f'{participant:<15}{getNumLevelsGained(participant)}')
+    data = getClanCupLevelsGained()
+    print(data)
+    with open('results.json', 'w+') as outfile:
+        json.dump(data, outfile)
