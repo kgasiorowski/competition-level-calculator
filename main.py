@@ -1,5 +1,6 @@
 import requests
 import json
+from collections import OrderedDict
 
 SKILLS = json.load(open('skills.json'))
 LEVELS = json.load(open('levels.json'))
@@ -56,6 +57,12 @@ def getClanCupLevelsGained():
 
 if __name__ == "__main__":
     data = getClanCupLevelsGained()
-    print(data)
+    sortedNames = sorted(data.keys(), key=lambda x:x.lower())
+
+    sortedData = OrderedDict()
+    for name in sortedNames:
+        sortedData[name] = data[name]
+
+    print(sortedData)
     with open('results.json', 'w+') as outfile:
-        json.dump(data, outfile)
+        json.dump(sortedData, outfile)
